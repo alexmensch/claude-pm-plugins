@@ -5,8 +5,19 @@
   },
   "plugins": [
     {
-      "name": "pm-plugin",
-      "source": "./plugins/pm-plugin"
+      "name": "new-feature",
+      "source": "./plugins/new-feature",
+      "description": "A plugin with a strict feature development workflow that is anchored on test-driven acceptance and disciplined coding practices.",
+      "author": {
+        "name": "Alex Marshall"
+      },
+      "repository": "https://github.com/alexmensch/claude-pm-plugins",
+      "license": "MIT",
+      "keywords": "product management pm feature development"
     }
-  ]
+  ],
+  "metadata": {
+    "description": "A suite of plugins to help product managers build and realease new features.",
+    "version": "0.2.0"
+  }
 }
