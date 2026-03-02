@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "pm-plugin",
-      "source": "./plugins/pm-plugin",
+      "source": "./plugins/pm-plugin"
     }
   ]
 }
