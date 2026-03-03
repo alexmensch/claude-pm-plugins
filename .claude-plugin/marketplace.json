@@ -1,18 +1,18 @@
 {
-  "name": "pm-plugins",
-  "version": "0.2.0",
+  "name": "sdl-plugins",
+  "version": "0.3.0",
   "owner": {
     "name": "Alex Marshall"
   },
   "plugins": [
     {
-      "name": "new-feature",
-      "source": "./plugins/new-feature",
+      "name": "build-feature",
+      "source": "./plugins/build-feature",
       "description": "Build new product features with a strict development workflow that is anchored on test-driven acceptance and disciplined coding practices.",
       "author": {
         "name": "Alex Marshall"
       },
-      "repository": "https://github.com/alexmensch/claude-pm-plugins",
+      "repository": "https://github.com/alexmensch/claude-sdl-plugins",
       "license": "MIT",
       "keywords": [
         "product management",

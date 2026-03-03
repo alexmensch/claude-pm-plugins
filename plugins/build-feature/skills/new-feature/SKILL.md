@@ -13,8 +13,8 @@ When implementing a new feature or new functionality in an existing codebase, yo
 6. Run the linting tool that's configured for the project.
 7. Run either the build command or mock deploy command for the project to ensure there are no build errors. Ensure that you do not build or deploy the project to production, you are only ensuring the project builds, deploys, or compiles correctly.
 8. Update README.md and CLAUDE.md in the project root for changes that are functionally noticeable to a user or developer of this codebase. Bug fixes, refactors, internal renaming, and test changes do not require documentation updates unless they change something observable from the outside.
-9. If the project uses semver and this change is being released, update the relevant files according to the set of changes being made, following semver conventions for major, minor, patch. Usually package.json and manifest.json contain semver versions for the project, but check the project CLAUDE.me documentation if in doubt, and add this information to CLAUDE.md if it is not already there. If you are not certain that the version should be updated, ask the user.
-10. As the final step, you will ask the user to commit all changes and create a PR.
+9. If the project uses semver and this change is being released, use the `semver` skill to determine the correct version bump, then update the relevant files. Usually package.json and manifest.json contain semver versions for the project, but check the project CLAUDE.md documentation if in doubt, and add this information to CLAUDE.md if it is not already there. If you are not certain that the version should be updated, ask the user.
+10. As the final step, you will ask the user to commit all changes and create a PR. When creating the PR, use the `pull-request` skill to format it correctly.
 
 ## Handling workflow deviations
 

@@ -8,7 +8,7 @@ Add this repository as a plugin marketplace, then install the plugin you want:
 
 ```
 /plugin marketplace add alexmensch/claude-pm-plugins
-/plugin install new-feature@pm-plugins
+/plugin install build-feature@pm-plugins
 ```
 
 ## Plugins
