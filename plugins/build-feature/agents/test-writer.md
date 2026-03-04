@@ -59,11 +59,10 @@ For every requirement row in the table:
 
 1. Write tests covering all acceptance criteria and edge cases listed for that requirement.
 2. Tests must be written **to fail** — do not write any implementation code.
-3. Each test should have a clear, descriptive name that maps back to the requirement number and scenario (e.g. `Requirement 1: returns 404 for unknown routes`).
-4. Group tests by requirement using `describe` blocks or the equivalent in the test framework.
-5. Add a short comment above each group referencing the requirement number from the specification.
-6. Keep test setup DRY — use shared fixtures, `beforeEach`, or equivalent rather than repeating setup in every test.
-7. Follow the existing test patterns and conventions in the codebase.
+3. Each test should have a clear, descriptive name that describes the behaviour being tested (e.g. `returns 404 for unknown routes`, `rejects empty input with a validation error`). Do not reference requirement numbers in test names or comments.
+4. Group tests by functional area or feature behaviour using `describe` blocks or the equivalent in the test framework.
+5. Keep test setup DRY — use shared fixtures, `beforeEach`, or equivalent rather than repeating setup in every test.
+6. Follow the existing test patterns and conventions in the codebase.
 
 ---
 
@@ -88,9 +87,46 @@ Evaluate the results:
 
 ---
 
+### Step 5 — Commit, merge, and remove the worktree
+
+Once Step 4 is complete (tests written and results reported), do the following in order. This is mandatory — the orchestrating session depends on the tests being present in the feature branch before it continues.
+
+1. Commit all test files:
+   ```bash
+   git add -A && git commit -m "Add tests for [feature name]"
+   ```
+
+2. Capture the test-writer's own worktree path and branch name:
+   ```bash
+   OWN_PATH=$(pwd)
+   OWN_BRANCH=$(git branch --show-current)
+   ```
+
+3. Find the main worktree path (the first entry in the worktree list):
+   ```bash
+   MAIN_PATH=$(git worktree list --porcelain | grep "^worktree " | head -1 | cut -d' ' -f2)
+   ```
+
+4. Merge the test-writer's branch into the main worktree's currently checked-out branch (the feature branch):
+   ```bash
+   git -C "$MAIN_PATH" merge "$OWN_BRANCH" --no-edit
+   ```
+   If this merge produces a conflict, stop and report it as a blocker. Do not attempt to resolve conflicts automatically.
+
+5. Remove the test-writer's worktree and its branch:
+   ```bash
+   git -C "$MAIN_PATH" worktree remove "$OWN_PATH" --force
+   git -C "$MAIN_PATH" branch -d "$OWN_BRANCH"
+   ```
+
+6. Report in your output that the commit, merge, and cleanup are complete, and confirm the branch name the tests were merged into.
+
+---
+
 ## Constraints
 
 - Never write implementation code — only test code.
 - Never interact with the user — you are running in the background. Report all findings in your output.
 - Never assume the test framework — always verify from `CLAUDE.md` or project configuration.
 - If the specification is ambiguous or incomplete, write tests for the most reasonable interpretation and note the ambiguity in your output.
+- Always complete Step 5. The orchestrating session must not have to merge or clean up the worktree itself.

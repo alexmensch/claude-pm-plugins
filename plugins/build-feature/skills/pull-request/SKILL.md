@@ -30,6 +30,18 @@ The title must be:
 
 ## Body
 
+### Requirements reference
+
+If a requirements GUID was provided (from a `features/` file), include it as the first line of the body:
+
+```
+**Requirements:** `<guid>`
+```
+
+Omit this line entirely if no GUID is available.
+
+---
+
 ### Changes
 
 Include a table summarising the behavioural changes in this PR.

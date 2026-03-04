@@ -68,9 +68,25 @@ If the user requests changes, update the table and ask again. Repeat until appro
 
 ### Step 4 — Produce the output
 
-Once the user confirms the requirements are complete, use the Write tool to save the finalised requirements table as Markdown to `/tmp/feature-requirements-{short-name}.md` (where `{short-name}` is a kebab-case slug of the feature name). Tell the user the file path so they can copy the raw Markdown source. Then also output the requirements in the conversation for reference.
+Once the user confirms the requirements are complete, do the following in order:
+
+1. Generate a UUID by running `uuidgen` via Bash. If `uuidgen` is unavailable, use `python3 -c "import uuid; print(uuid.uuid4())"`.
+2. Get today's date by running `date +%Y-%m-%d` via Bash.
+3. Create the `features/` directory in the current working directory if it does not already exist: `mkdir -p features`.
+4. Write the requirements to `features/{short-name}.md` (where `{short-name}` is a kebab-case slug of the feature name) using the format below. The frontmatter `guid` and `date` fields are mandatory.
+5. Tell the user the exact file path. Output the full file content in the conversation for reference.
 
 ---
+
+#### features/{short-name}.md
+
+```
+---
+guid: <generated-uuid>
+date: <YYYY-MM-DD>
+feature: <short-name>
+---
+```
 
 #### Feature: [short name]
 
