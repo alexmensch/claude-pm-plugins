@@ -39,6 +39,12 @@ When implementing a new feature or new functionality in an existing codebase, yo
 8. Update README.md and CLAUDE.md in the project root for changes that are functionally noticeable to a user or developer of this codebase. Bug fixes, refactors, internal renaming, and test changes do not require documentation updates unless they change something observable from the outside.
 9. If the project uses semver and this change is being released, use the `semver` skill to determine the correct version bump, then update the relevant files. Usually package.json and manifest.json contain semver versions for the project, but check the project CLAUDE.md documentation if in doubt, and add this information to CLAUDE.md if it is not already there. If you are not certain that the version should be updated, ask the user.
 10. As the final step, you will ask the user to commit all changes and create a PR. When creating the PR, use the `pull-request` skill to format it correctly. If a requirements GUID was extracted in step 2, pass it to the PR so it can be included as a reference.
+11. After the PR is created and you have its number: if the original requirements were provided as a file (step 2) and `./requirements/ROADMAP.md` exists, update the roadmap to record that this feature has shipped. The ROADMAP.md format is owned by the `plan-roadmap` skill — follow its structure exactly when making edits:
+    1. Find the feature's row in the planned table by matching the GUID extracted in step 2.
+    2. Remove that row from its release section. If removing it leaves the release section with no remaining rows, remove the entire release section (heading, description, and empty table).
+    3. Renumber the sequence column (`#`) of the remaining planned rows so they remain contiguous starting from 1.
+    4. Add the feature to the Shipped table with the PR number recorded as `#PR`. If no Shipped table exists yet, create one following the structure defined in the `plan-roadmap` skill.
+    5. Commit the ROADMAP.md change with the message: `Update roadmap: mark [feature-slug] as shipped (#PR)`.
 
 ## Handling workflow deviations
 
@@ -68,6 +74,7 @@ The data handovers and sequencing listed in the steps above are:
 4. test-writer writes tests and reports what it created -> you commit its work in the worktree, merge into the feature branch, and remove the worktree -> verify test commit is present -> run all tests
 5. code-reviewer reviews, presents findings to user, makes approved fixes, commits -> if requirements came from a file and changes were made, append out-of-spec section to requirements file
 6. Remaining steps (lint, build, docs, semver, PR with GUID) completed in order
+7. If requirements came from a file and ROADMAP.md exists: feature moved from planned to shipped table, sequence renumbered, committed
 
 ## Commit granularity
 

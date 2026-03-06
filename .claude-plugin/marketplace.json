@@ -37,6 +37,24 @@
         "product",
         "feature development"
       ]
+    },
+    {
+      "name": "plan-roadmap",
+      "source": "./plugins/plan-roadmap",
+      "description": "Organise defined feature requirements into a sequenced, release-grouped roadmap and communicate it in user-benefit terms.",
+      "author": {
+        "name": "Alex Marshall"
+      },
+      "repository": "https://github.com/alexmensch/claude-sdl-plugins",
+      "license": "MIT",
+      "keywords": [
+        "product management",
+        "pm",
+        "product",
+        "roadmap",
+        "planning",
+        "releases"
+      ]
     }
   ],
   "metadata": {
