@@ -1,6 +1,6 @@
 {
   "name": "sdl-plugins",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "owner": {
     "name": "Alex Marshall"
   },
@@ -72,6 +72,22 @@
         "traceability",
         "requirements",
         "history"
+      ]
+    },
+    {
+      "name": "documentation",
+      "source": "./plugins/documentation",
+      "description": "Write user-facing changelog entries from PRs and requirements files.",
+      "author": {
+        "name": "Alex Marshall"
+      },
+      "repository": "https://github.com/alexmensch/claude-sdl-plugins",
+      "license": "CC BY 4.0",
+      "keywords": [
+        "changelog",
+        "release notes",
+        "documentation",
+        "product updates"
       ]
     }
   ],

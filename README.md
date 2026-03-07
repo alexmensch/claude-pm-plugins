@@ -12,6 +12,7 @@ Add this repository as a plugin marketplace, then install the plugins you want:
 /plugin install feature-development@claude-sdl-plugins
 /plugin install roadmap@claude-sdl-plugins
 /plugin install debugging@claude-sdl-plugins
+/plugin install documentation@claude-sdl-plugins
 ```
 
 ## Plugins
@@ -106,6 +107,22 @@ Invoke it with `/blame` inside Claude Code. The skill asks for a file, whether t
 `git blame` → commit hash → PR → requirements GUID → spec file
 
 The output is a structured chain-of-custody table for each unique commit found. Where the chain is complete, the original requirement text is surfaced directly. Where a link is broken — a direct push with no PR, a PR with no requirements reference, a GUID with no matching spec file — the trace shows how far it reached and explains exactly what is missing.
+
+---
+
+### documentation
+
+**Skills:** `write-changelog`
+
+Write brief, user-facing changelog entries from PRs or requirements files.
+
+#### write-changelog
+
+Invoke it with `/write-changelog` inside Claude Code and provide one or more PR IDs or requirements file paths. The skill resolves each PR to its requirements GUID, reads the corresponding spec file for context, and writes a concise changelog entry in a consistent house style.
+
+Each entry contains a title, date, and 2–4 sentences of prose that describe what changed and why it matters — written entirely from the user's perspective, with no implementation details. The embedded style guide enforces a consistent voice: confident, direct, and brief.
+
+After presenting the entry, the skill asks whether you want it saved to disk as a Markdown file or if you're done.
 
 ---
 

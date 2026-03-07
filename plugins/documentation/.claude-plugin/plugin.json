@@ -1,0 +1,5 @@
+{
+  "name": "documentation",
+  "description": "Write changelog entries and other user-facing documentation from PRs and requirements files.",
+  "version": "0.1.0"
+}
