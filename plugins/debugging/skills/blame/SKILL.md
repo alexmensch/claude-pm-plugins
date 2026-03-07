@@ -71,17 +71,25 @@ If either command fails (file not found, not a git repo, etc.), stop and report 
 
 ### Step 3 — Resolve the repository identity
 
-To query the GitHub API you need the repo owner and name. Get them with:
+Steps 4 and 5 use the GitHub API to trace commits to PRs and extract requirements GUIDs. Before proceeding, verify the remote is a GitHub repository:
+
+```bash
+git remote get-url origin
+```
+
+If the remote URL does not point to `github.com`, stop the PR-tracing portion of the chain and inform the user:
+
+> _"The remote is not hosted on GitHub. The git blame → commit portion of the trace is complete, but PR and requirements tracing requires the GitHub API and cannot proceed for this repository."_
+
+Present whatever chain you have (commit hashes, messages, authors, dates) and end there.
+
+If the remote is GitHub, resolve the owner and repo name:
 
 ```bash
 gh repo view --json owner,name
 ```
 
-If `gh` is not available or not authenticated, fall back to parsing the remote URL:
-
-```bash
-git remote get-url origin
-```
+If `gh` is not available or not authenticated, parse the owner and name from the remote URL directly.
 
 ---
 

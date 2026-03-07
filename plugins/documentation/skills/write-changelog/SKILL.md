@@ -28,8 +28,10 @@ For each PR ID:
 
 1. Fetch the PR details:
    ```bash
-   gh pr view <id> --json title,body,mergedAt
+   gh pr view <id> --json title,body,mergedAt,state
    ```
+   If `mergedAt` is null and the PR state is not `MERGED`, the PR has not been merged yet. Use `AskUserQuestion` to inform the user and ask how to proceed:
+   > _"PR #[id] has not been merged yet. Would you like to write a changelog entry from it anyway (using today's date), or skip it?"_
 2. Extract the requirements GUID from the PR body. The `pull-request` skill formats it as the first line of the body:
    ```
    **Requirements:** `<guid>`

@@ -1,6 +1,6 @@
 ---
 name: new-feature
-description: Follow a standard workflow for feature implementation in a project that ensures that a technical spec drives both test writing and implementation in parallel, followed by a code review that is always performed before a pull request is submitted to the default branch of the project's code base.
+description: Follow a standard workflow for feature implementation in a project that ensures that a technical spec drives both test writing and implementation in parallel, followed by a code review that is always performed before a pull request is submitted to the default branch of the project's code base. Use when the user says "new feature", "build a feature", "implement a feature", "implement this", or provides a requirements file to build from.
 ---
 
 When implementing a new feature or new functionality in an existing codebase, you must adhere to the steps that follow with the goal of creating high quality, efficient, and clear code at all times. Follow these steps in strict order:
@@ -8,7 +8,7 @@ When implementing a new feature or new functionality in an existing codebase, yo
 1. Before starting work, always create a new branch. Make sure that the default branch is at the latest version and make sure the new branch is created from the default branch. Never work in the default branch for the project, which is usually `master`, but may also be `main` in some cases. I do not care what the branch is called, you can decide.
 2. Determine how the requirements are being provided:
 
-   **If the user has provided a path to a requirements file** (e.g. a file in `features/`): read the file. Extract the `guid` and `date` fields from its frontmatter if present — store the `guid` for use in the PR (step 10) and for updating the file after code review (step 5). Treat the requirements table in the file as the confirmed requirements — proceed directly to summarising what you are about to pass to the `technical-spec` agent and use `AskUserQuestion` to ask the user to confirm, then invoke the agent. Track the file path for use in step 5.
+   **If the user has provided a path to a requirements file** (e.g. a file in `requirements/`): read the file. Extract the `guid` and `date` fields from its frontmatter if present — store the `guid` for use in the PR (step 10) and for updating the file after code review (step 5). Treat the requirements table in the file as the confirmed requirements — proceed directly to summarising what you are about to pass to the `technical-spec` agent and use `AskUserQuestion` to ask the user to confirm, then invoke the agent. Track the file path for use in step 5.
 
    **If the user has described the feature in chat** (no file provided): require descriptive precision. If there is ambiguity in what the user is requesting, without being pedantic, ask for clarification. Once you have a clear understanding of the requirements, summarise what you are about to pass to the technical-spec agent and use `AskUserQuestion` to ask the user to confirm before you proceed.
 

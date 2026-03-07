@@ -19,8 +19,11 @@ Read `./requirements/ROADMAP.md`. If the file does not exist, stop and tell the 
 
 From the roadmap, extract:
 - The product context from the Overview section (to understand what the product does and who it's for)
+- The target user profiles from the Target Users section (to understand who you are writing for and what they care about)
 - The planned releases and the features within each
 - The sequence and grouping rationale
+
+The Target Users section is particularly important — it tells you how the audience thinks, what frustrates them, and what language they use. Use it to inform tone, framing, and which benefits to emphasise. If the Target Users section is missing, note this to the user and proceed using the product context from the Overview section instead.
 
 For each feature listed in the planned table, read its requirements file to understand:
 - What the feature does in concrete terms
@@ -42,11 +45,15 @@ Use `AskUserQuestion` for this.
 
 ---
 
-### Step 3 — Write the external roadmap
+### Step 3 — Draft and review
 
-Write the document to `./requirements/EXTERNAL-ROADMAP.md` using the guidance below.
+Draft the external roadmap using the guidance below. Present the full draft to the user using `AskUserQuestion` before writing it to disk:
 
-After writing, tell the user the file path and offer a brief summary of the document's tone and emphasis.
+> _"Here is the draft external roadmap. Select **Approved** to save it, or select **Changes needed** and describe what you'd like adjusted."_
+
+Provide at least two options: one to approve and one to request changes. If the user requests changes, revise the draft and present it again. Repeat until approved.
+
+Once approved, write the document to `./requirements/EXTERNAL-ROADMAP.md`. Tell the user the file path and offer a brief summary of the document's tone and emphasis.
 
 ---
 
