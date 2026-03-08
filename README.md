@@ -1,18 +1,18 @@
-# Software Development Lifecycle (SDL) Plugins for Claude Code
+# Software Development Life Cycle (SDLC) Plugins for Claude Code
 
-A collection of Claude Code plugins for product managers and developers who want structured, disciplined workflows across the full feature lifecycle — from defining an idea, to planning what to build next, to shipping it.
+A collection of Claude Code plugins for product managers and developers who want structured, disciplined workflows across the full feature lifecycle — from defining an idea, to planning what to build next, to shipping and marketing it.
 
 ## Installation
 
 Add this repository as a plugin marketplace, then install the plugins you want:
 
 ```
-/plugin marketplace add alexmensch/claude-sdl-plugins
-/plugin install feature-definition@claude-sdl-plugins
-/plugin install feature-development@claude-sdl-plugins
-/plugin install roadmap@claude-sdl-plugins
-/plugin install debugging@claude-sdl-plugins
-/plugin install documentation@claude-sdl-plugins
+/plugin marketplace add alexmensch/claude-sdlc-plugins
+/plugin install feature-definition@claude-sdlc-plugins
+/plugin install feature-development@claude-sdlc-plugins
+/plugin install roadmap@claude-sdlc-plugins
+/plugin install debugging@claude-sdlc-plugins
+/plugin install documentation@claude-sdlc-plugins
 ```
 
 ## Plugins
