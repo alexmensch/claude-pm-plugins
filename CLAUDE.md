@@ -32,6 +32,8 @@ plugins/
     skills/
       plan-roadmap/SKILL.md
       communicate-roadmap/SKILL.md
+    agents/
+      persona-researcher.md   # Web research to validate/challenge persona claims (runs in foreground)
 
   debugging/                # Plugin: code investigation and traceability
     .claude-plugin/plugin.json
@@ -59,14 +61,16 @@ plugins/
 
 ### Agent isolation model
 
-All four agents in `feature-development` are invoked by the `new-feature` orchestrating skill. None of them interact directly with the user:
+Agents are invoked by orchestrating skills and never interact directly with the user. The orchestrating skill handles all user interaction (presenting outputs, collecting approvals, making changes). Each agent file contains an explicit isolation statement reinforcing this boundary.
 
+**feature-development** (invoked by `new-feature`):
 - **technical-spec** — runs in the foreground, returns a spec to the orchestrator
 - **test-writer** — runs in the background in an isolated worktree, reports what it created
 - **coverage-reviewer** — runs in the foreground, returns a coverage report (or skips if no coverage tooling is detected)
 - **code-reviewer** — runs in the foreground, returns a findings report to the orchestrator
 
-The orchestrating skill handles all user interaction (presenting outputs, collecting approvals, making changes). Each agent file contains an explicit isolation statement reinforcing this boundary.
+**roadmap** (invoked by `plan-roadmap`):
+- **persona-researcher** — runs in the foreground, conducts web research to validate/challenge persona claims, returns a structured report
 
 ### Requirements file format
 

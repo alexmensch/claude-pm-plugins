@@ -58,6 +58,25 @@ Use `AskUserQuestion` to ask focused questions about who the target users are. D
 
 Once you have a clear picture of each persona, write a short profile for each (3–6 sentences) that captures: who they are, what they are trying to do, what frustrates them, and what they need from this product. Present the profiles to the user using `AskUserQuestion` and ask them to confirm or revise before proceeding.
 
+#### Offering persona research
+
+After the user has confirmed (or updated) the persona profiles, offer to run market research to validate and deepen the profiles. Use `AskUserQuestion` to list each persona by name and ask which ones (if any) the user wants researched. This is optional — the user can decline and proceed directly to step 3.
+
+For each persona the user selects, invoke the `persona-researcher` agent in the foreground, passing it:
+- The confirmed persona profile text
+- The product overview from `ROADMAP.md` (if it exists), or a summary of what the user has described about the product
+
+The agent returns a structured report (narrative summary + evidence table + optional new persona suggestions). For each researched persona:
+
+1. Present the full report to the user.
+2. Use `AskUserQuestion` to ask what changes (if any) they want to make to the persona based on the findings. Provide options such as:
+   - **Update the persona** — the user describes what to change
+   - **Add a suggested persona** — if the agent flagged a potential new persona the user wants to include
+   - **No changes** — the user accepts the existing persona as-is despite the findings
+3. If the user requests changes, update the persona profile text accordingly and present the revised profile for confirmation before moving on.
+
+Once all selected personas have been researched and any updates confirmed, proceed to step 3.
+
 ---
 
 ### Step 3 — Understand intent
