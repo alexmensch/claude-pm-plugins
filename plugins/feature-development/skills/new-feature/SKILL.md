@@ -8,7 +8,7 @@ When implementing a new feature or new functionality in an existing codebase, yo
 1. Before starting work, always create a new branch. Make sure that the default branch is at the latest version and make sure the new branch is created from the default branch. Never work in the default branch for the project, which is usually `master`, but may also be `main` in some cases. I do not care what the branch is called, you can decide.
 2. Determine how the requirements are being provided:
 
-   **If the user has provided a path to a requirements file** (e.g. a file in `requirements/`): read the file. Extract the `guid` and `date` fields from its frontmatter if present — store the `guid` for use in the roadmap update (step 6), for updating the file after code review (step 5), and for the PR (step 11). Treat the requirements table in the file as the confirmed requirements — proceed directly to summarising what you are about to pass to the `technical-spec` agent and use `AskUserQuestion` to ask the user to confirm, then invoke the agent. Track the file path for use in step 5.
+   **If the user has provided a path to a requirements file** (e.g. a file in `product/`): read the file. Extract the `guid` and `date` fields from its frontmatter if present — store the `guid` for use in the roadmap update (step 6), for updating the file after code review (step 5), and for the PR (step 11). Treat the requirements table in the file as the confirmed requirements — proceed directly to summarising what you are about to pass to the `technical-spec` agent and use `AskUserQuestion` to ask the user to confirm, then invoke the agent. Track the file path for use in step 5.
 
    **If the user has described the feature in chat** (no file provided): require descriptive precision. If there is ambiguity in what the user is requesting, without being pedantic, ask for clarification. Once you have a clear understanding of the requirements, summarise what you are about to pass to the technical-spec agent and use `AskUserQuestion` to ask the user to confirm before you proceed.
 
@@ -93,23 +93,23 @@ When implementing a new feature or new functionality in an existing codebase, yo
    After this step completes: if the original requirements were provided as a file on disk (step 2), and any changes were made, append an "Out-of-spec changes" section to the requirements file documenting those changes. Use the `define-feature` skill to produce the correctly-formatted table rows if it is available; otherwise write the rows directly. Use the same table format as the requirements table. This section is an audit record of changes that were made outside the original specification.
 
    **Context checkpoint:** The remaining steps (7–13) are mechanical and only require: the feature name, requirements GUID, requirements file path, feature branch name, and whether a ROADMAP.md update is applicable. The technical specification, implementation details, and code review findings are no longer needed. If the session context is approaching its limit, this is a safe point to compact.
-7. If the original requirements were provided as a file (step 2) and `./requirements/ROADMAP.md` exists, update the roadmap to record that this feature has shipped and move the requirements file to `shipped/`. The ROADMAP.md format is owned by the `plan-roadmap` skill — follow its structure exactly when making edits:
+7. If the original requirements were provided as a file (step 2) and `./product/ROADMAP.md` exists, update the roadmap to record that this feature has shipped and move the requirements file to `shipped/`. The ROADMAP.md format is owned by the `plan-roadmap` skill — follow its structure exactly when making edits:
     1. Find the feature's row in the planned table by matching the GUID extracted in step 2.
     2. Remove that row from its release section. If removing it leaves the release section with no remaining rows, remove the entire release section (heading, description, and empty table).
     3. Renumber the sequence column (`#`) of the remaining planned rows so they remain contiguous starting from 1.
     4. Add the feature to the Shipped table without a PR number — leave the PR column empty for now. If no Shipped table exists yet, create one following the structure defined in the `plan-roadmap` skill. The shipped entry's link must point to `./shipped/<feature>.md`.
-    5. Move the requirements file to `./requirements/shipped/`, creating the directory if it doesn't exist. If the file's previous release subfolder is now empty, delete the empty folder.
+    5. Move the requirements file to `./product/shipped/`, creating the directory if it doesn't exist. If the file's previous release subfolder is now empty, delete the empty folder.
        ```bash
-       mkdir -p ./requirements/shipped/
-       git mv <current-path> ./requirements/shipped/<feature>.md
+       mkdir -p ./product/shipped/
+       git mv <current-path> ./product/shipped/<feature>.md
        ```
     6. If the release subfolder the file came from is now empty, remove it:
        ```bash
-       rmdir ./requirements/<release-name>/  # only succeeds if empty
+       rmdir ./product/<release-name>/  # only succeeds if empty
        ```
     7. Stage and commit both the ROADMAP.md update and the file move in a single commit:
        ```bash
-       git add ./requirements/ && git commit -m "Update roadmap: mark [feature-slug] as shipped"
+       git add ./product/ && git commit -m "Update roadmap: mark [feature-slug] as shipped"
        ```
 8. Run the linting tool that's configured for the project.
 9. Run either the build command or mock deploy command for the project to ensure there are no build errors. Ensure that you do not build or deploy the project to production, you are only ensuring the project builds, deploys, or compiles correctly.

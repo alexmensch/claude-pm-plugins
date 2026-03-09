@@ -76,12 +76,12 @@ When you have enough clarity to draft the full requirements table, write it to d
 
 1. Generate a UUID by running `uuidgen` via Bash. If `uuidgen` is unavailable, use `python3 -c "import uuid; print(uuid.uuid4())"`.
 2. Get today's date by running `date +%Y-%m-%d` via Bash.
-3. Create the `requirements/` directory in the current working directory if it does not already exist: `mkdir -p requirements`.
-4. Write the requirements to `requirements/{short-name}.md` (where `{short-name}` is a kebab-case slug of the feature name) using the format below. The frontmatter `guid` and `date` fields are mandatory.
+3. Create the `product/` directory in the current working directory if it does not already exist: `mkdir -p product`.
+4. Write the requirements to `product/{short-name}.md` (where `{short-name}` is a kebab-case slug of the feature name) using the format below. The frontmatter `guid` and `date` fields are mandatory.
 
 Then tell the user the file path and use `AskUserQuestion` to ask:
 
-> *"I've written the draft requirements to `requirements/{short-name}.md`. Please review the file, then select **Ready to finalise** if it's complete or **Keep refining** and tell me what needs to change."*
+> *"I've written the draft requirements to `product/{short-name}.md`. Please review the file, then select **Ready to finalise** if it's complete or **Keep refining** and tell me what needs to change."*
 
 Provide two options: one to approve and one to continue refining.
 
@@ -95,7 +95,7 @@ Once the user confirms the requirements are complete, tell them the final file p
 
 ---
 
-#### requirements/{short-name}.md
+#### product/{short-name}.md
 
 ```
 ---

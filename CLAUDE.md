@@ -29,13 +29,15 @@ plugins/
       coverage-reviewer.md   # Analyses test coverage of new code (runs in foreground)
       code-reviewer.md       # Reviews branch changes and returns findings (runs in foreground)
 
-  roadmap/                  # Plugin: roadmap planning and communication
+  roadmap/                  # Plugin: roadmap planning, strategy, and communication
     .claude-plugin/plugin.json
     skills/
+      define-strategy/SKILL.md # Product strategy definition and stress-testing
       plan-roadmap/SKILL.md
       communicate-roadmap/SKILL.md
     agents/
       persona-researcher.md   # Web research to validate/challenge persona claims (runs in foreground)
+      market-researcher.md    # Web research on competitive landscape (runs in foreground)
 
   debugging/                # Plugin: code investigation and traceability
     .claude-plugin/plugin.json
@@ -74,8 +76,9 @@ Agents are invoked by orchestrating skills and never interact directly with the 
 **feature-definition** (invoked by `define-feature`):
 - **user-researcher** — runs in the foreground, researches whether the user problem exists, how people solve it today, and gaps in existing solutions
 
-**roadmap** (invoked by `plan-roadmap`):
-- **persona-researcher** — runs in the foreground, conducts web research to validate/challenge persona claims, returns a structured report
+**roadmap** (invoked by `plan-roadmap` and `define-strategy`):
+- **persona-researcher** — runs in the foreground, conducts web research to validate/challenge persona claims, returns a structured report (invoked by `plan-roadmap`)
+- **market-researcher** — runs in the foreground, researches competitive landscape, validates strategic claims about the market (invoked by `define-strategy`)
 
 ### Requirements file format
 
@@ -99,14 +102,15 @@ feature: <kebab-case-slug>
 
 The `guid` is used to link requirements files to PRs (via the PR body) and to the roadmap.
 
-### Requirements directory structure
+### Product directory structure
 
-The `requirements/` directory is organised into subdirectories that mirror the roadmap:
+The `product/` directory holds all planning artifacts, organised into subdirectories that mirror the roadmap:
 
 ```
-requirements/
-  ROADMAP.md                    # Always at root
-  EXTERNAL-ROADMAP.md           # Always at root
+product/
+  STRATEGY.md                   # Product strategy (owned by define-strategy)
+  ROADMAP.md                    # Roadmap (owned by plan-roadmap)
+  EXTERNAL-ROADMAP.md           # External-facing roadmap (owned by communicate-roadmap)
   unassigned-feature.md         # Not yet assigned to a release
   release-name/                 # Kebab-cased release name
     feature-in-release.md
@@ -114,14 +118,17 @@ requirements/
     completed-feature.md
 ```
 
-- `define-feature` writes new files to the root (unassigned).
-- `plan-roadmap` moves files into release subfolders (and `shipped/`) after the user approves the roadmap structure, then auto-commits the moves.
+- `define-feature` writes new requirements files to the root (unassigned).
+- `define-strategy` writes `STRATEGY.md` to the root.
+- `plan-roadmap` reads `STRATEGY.md` to inform sequencing, moves files into release subfolders (and `shipped/`) after the user approves the roadmap structure, then auto-commits the moves.
 - `new-feature` moves a file to `shipped/` when marking it as shipped, then auto-commits.
 - `blame` and `write-changelog` search recursively, so they work with any directory layout.
 
-### ROADMAP.md format
+### ROADMAP.md and STRATEGY.md formats
 
-The roadmap file at `requirements/ROADMAP.md` is owned by the `plan-roadmap` skill and contains: Overview, Target Users, Planned (release-grouped feature tables with global sequence numbers and GUIDs), and Shipped (features with PR numbers). Feature links use subdirectory-relative paths (e.g. `./release-name/feature.md`, `./shipped/feature.md`). The `new-feature` skill updates the shipped table automatically after a PR is created.
+The roadmap file at `product/ROADMAP.md` is owned by the `plan-roadmap` skill and contains: Overview, Target Users, Planned (release-grouped feature tables with global sequence numbers and GUIDs), and Shipped (features with PR numbers). Feature links use subdirectory-relative paths (e.g. `./release-name/feature.md`, `./shipped/feature.md`). The `new-feature` skill updates the shipped table automatically after a PR is created.
+
+The strategy file at `product/STRATEGY.md` is owned by the `define-strategy` skill and contains: Strategic Thesis, Differentiation, Market Context, and Risks and Open Questions. If it exists, `plan-roadmap` reads it to inform sequencing decisions.
 
 ### PR format
 
@@ -147,15 +154,16 @@ PRs include a `**Requirements:** \`<guid>\`` line in the body when created from 
 The skills form a pipeline. Data flows through this chain:
 
 ```
-define-feature → requirements file → plan-roadmap → ROADMAP.md
-                                   → new-feature → technical-spec → test-writer
-                                                  → coverage-reviewer
-                                                  → code-reviewer
-                                                  → pull-request (with GUID)
-                                                  → ROADMAP.md (shipped update)
-                                   → write-changelog (reads PR + requirements)
-                                   → blame (traces code → PR → GUID → requirements)
-                                   → communicate-roadmap (reads ROADMAP.md)
+define-strategy → STRATEGY.md ──────→ plan-roadmap (reads strategy to inform sequencing)
+define-feature  → requirements file → plan-roadmap → ROADMAP.md
+                                    → new-feature → technical-spec → test-writer
+                                                   → coverage-reviewer
+                                                   → code-reviewer
+                                                   → pull-request (with GUID)
+                                                   → ROADMAP.md (shipped update)
+                                    → write-changelog (reads PR + requirements)
+                                    → blame (traces code → PR → GUID → requirements)
+                                    → communicate-roadmap (reads ROADMAP.md)
 ```
 
 The requirements GUID is the linking key across all of these.

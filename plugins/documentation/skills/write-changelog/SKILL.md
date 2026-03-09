@@ -14,7 +14,7 @@ You are a product changelog writer. Your job is to take one or more pull request
 The user must provide at least one of:
 
 - **One or more PR IDs** (e.g. `#47`, `#51, #53`)
-- **One or more requirements file paths** (e.g. `requirements/channel-management.md`)
+- **One or more requirements file paths** (e.g. `product/channel-management.md`)
 
 If neither has been provided, use `AskUserQuestion` to ask.
 
@@ -36,9 +36,9 @@ For each PR ID:
    ```
    **Requirements:** `<guid>`
    ```
-3. If a GUID is found, search `requirements/` for the file containing it:
+3. If a GUID is found, search `product/` for the file containing it:
    ```bash
-   grep -rl "<guid>" ./requirements/
+   grep -rl "<guid>" ./product/
    ```
    Read the matching file to get the feature summary and requirements table.
 4. If no GUID is found, use the PR title and body as the sole source of context.

@@ -7,7 +7,7 @@ You are a product planning partner. Your job is to take a set of defined feature
 
 **Important constraints:**
 - You may read requirements files but must never modify them. If incompatibilities between requirements surface during planning, flag them and direct the user to resolve them using the `define-feature` skill.
-- You work only with requirements files that already exist in `./requirements/`. If the user wants to add something that doesn't have a requirements file yet, tell them to use `define-feature` first.
+- You work only with requirements files that already exist in `./product/`. If the user wants to add something that doesn't have a requirements file yet, tell them to use `define-feature` first.
 - The roadmap is an ordered plan. It is not a backlog. Every feature on it should have a clear reason for its position.
 
 ---
@@ -18,14 +18,15 @@ You are a product planning partner. Your job is to take a set of defined feature
 
 Do the following in order:
 
-1. Check whether `./requirements/ROADMAP.md` already exists. If it does, read it — this is the current state of the roadmap.
-2. Scan `./requirements/` **recursively** (including all subdirectories) for `.md` files, excluding `ROADMAP.md` and `EXTERNAL-ROADMAP.md`. For each file found, read its frontmatter to extract:
+1. Check whether `./product/STRATEGY.md` exists. If it does, read it — the strategy informs roadmap sequencing and grouping decisions. Pay particular attention to the Strategic Thesis and Differentiation sections, as these should influence what gets built first.
+2. Check whether `./product/ROADMAP.md` already exists. If it does, read it — this is the current state of the roadmap.
+3. Scan `./product/` **recursively** (including all subdirectories) for `.md` files, excluding `ROADMAP.md`, `EXTERNAL-ROADMAP.md`, and `STRATEGY.md`. For each file found, read its frontmatter to extract:
    - `guid`
    - `date`
    - `feature` (the short name / slug)
    - Read the feature summary (the one or two sentence description immediately under the `#### Feature:` heading)
    - Note the file's **current directory** (root, a release subfolder, or `shipped/`) — this is needed later when reconciling the directory structure.
-3. Cross-reference the files found against any existing roadmap to identify:
+4. Cross-reference the files found against any existing roadmap to identify:
    - Features already on the roadmap (planned or shipped)
    - Features not yet on the roadmap
    - Features on the roadmap whose requirements file no longer exists (flag these)
@@ -38,7 +39,7 @@ Summarise what you found to the user: how many requirements files exist, what th
 
 Before proposing any structure, build a profile of the people this product is for. This information will be stored in the roadmap and is used by both the `communicate-roadmap` skill and feature development workflows to ensure decisions stay grounded in real user needs.
 
-Check whether `./requirements/ROADMAP.md` already contains a `## Target Users` section. If it does, read the existing profiles and present them to the user. Ask whether they are still accurate or need updating. If there is no existing profile, gather the following.
+Check whether `./product/ROADMAP.md` already contains a `## Target Users` section. If it does, read the existing profiles and present them to the user. Ask whether they are still accurate or need updating. If there is no existing profile, gather the following.
 
 Use `AskUserQuestion` to ask focused questions about who the target users are. Don't ask all at once — lead with the most essential question and follow up. Cover:
 
@@ -112,6 +113,11 @@ Explain your reasoning for the sequencing and grouping. If you made assumptions,
 
 Challenge groupings that don't hold together. A release should tell a coherent story: someone using the product after this release should be able to feel the difference in a specific area of their work. Avoid releases that are just implementation milestones with no clear user-facing narrative.
 
+If a strategy document was loaded in step 1, use it to inform and challenge the proposed structure:
+- Features that directly serve the strategic thesis should generally be prioritised earlier.
+- If the proposed sequencing contradicts the stated strategy (e.g. building a feature that doesn't serve the thesis before one that does), flag this and ask the user to justify the ordering.
+- If the strategy has open questions or risks that a specific feature could help resolve (e.g. validating a market assumption), consider whether that feature should be built earlier to reduce strategic risk.
+
 Use `AskUserQuestion` to present the draft and ask the user to approve or refine it. Repeat until the user confirms the structure is ready.
 
 ---
@@ -135,7 +141,7 @@ Present the draft overview to the user using `AskUserQuestion` and ask them to a
 
 Once the structure, user profiles, and overview are all confirmed:
 
-1. **Write** `./requirements/ROADMAP.md` using the format below.
+1. **Write** `./product/ROADMAP.md` using the format below.
 2. **Reorganise the directory structure** to match the confirmed roadmap (see the "Directory reorganisation" section below).
 3. Tell the user the file has been written, summarise the roadmap briefly, and list the file moves that were made.
 
@@ -147,22 +153,22 @@ After writing ROADMAP.md, move every requirements file into the directory that m
 
 | Roadmap status | Target directory |
 |---------------|-----------------|
-| Assigned to a release | `./requirements/<release-name>/` where `<release-name>` is the release name converted to kebab-case (lowercase ASCII, digits, and hyphens only) |
-| Shipped | `./requirements/shipped/` |
-| Not assigned to any release | `./requirements/` (root) |
+| Assigned to a release | `./product/<release-name>/` where `<release-name>` is the release name converted to kebab-case (lowercase ASCII, digits, and hyphens only) |
+| Shipped | `./product/shipped/` |
+| Not assigned to any release | `./product/` (root) |
 
 Rules:
 - Create target directories that don't exist yet (`mkdir -p`).
 - If a file is already in the correct location, skip it.
 - If a release folder becomes empty after moves (because all its features were reassigned or shipped), delete the empty folder.
-- `ROADMAP.md` and `EXTERNAL-ROADMAP.md` always stay at the root — never move them.
+- `ROADMAP.md`, `EXTERNAL-ROADMAP.md`, and `STRATEGY.md` always stay at the root — never move them.
 - When re-planning moves a feature from one release to another, move the file directly from the old folder to the new one.
 - When a feature is removed from all releases, move it back to the root.
 
 After all moves are complete, stage the moved files and the updated ROADMAP.md, then create a single git commit:
 
 ```bash
-git add -A ./requirements/ && git commit -m "Reorganise requirements directory to match roadmap structure"
+git add -A ./product/ && git commit -m "Reorganise requirements directory to match roadmap structure"
 ```
 
 If no files needed moving, do not create a commit.
@@ -222,7 +228,7 @@ If no files needed moving, do not create a commit.
 
 Rules for the format:
 - The sequence column (`#`) is a global sequence across all releases. If release 1 contains features 1–3 and release 2 contains features 4–6, the numbers continue across sections.
-- Feature names in the table link to their requirements file using a path relative to the `requirements/` directory. Planned features link to `./<release-name>/<feature>.md`, shipped features link to `./shipped/<feature>.md`, and any unassigned features link to `./<feature>.md`.
+- Feature names in the table link to their requirements file using a path relative to the `product/` directory. Planned features link to `./<release-name>/<feature>.md`, shipped features link to `./shipped/<feature>.md`, and any unassigned features link to `./<feature>.md`.
 - The GUID is formatted as inline code (backtick-wrapped).
 - If there are no shipped features, omit the Shipped section entirely.
 - If there is only one planned release, omit the release heading and just use the single table under a `## Planned` heading. The files still live in a release subfolder and links still use the subdirectory path.

@@ -15,7 +15,7 @@ A good test for every sentence you write: if you removed the product name and re
 
 ### Step 1 — Load the roadmap
 
-Read `./requirements/ROADMAP.md`. If the file does not exist, stop and tell the user they need to run the `plan-roadmap` skill first.
+Read `./product/ROADMAP.md`. If the file does not exist, stop and tell the user they need to run the `plan-roadmap` skill first.
 
 From the roadmap, extract:
 - The product context from the Overview section (to understand what the product does and who it's for)
@@ -53,7 +53,7 @@ Draft the external roadmap using the guidance below. Present the full draft to t
 
 Provide at least two options: one to approve and one to request changes. If the user requests changes, revise the draft and present it again. Repeat until approved.
 
-Once approved, write the document to `./requirements/EXTERNAL-ROADMAP.md`. Tell the user the file path and offer a brief summary of the document's tone and emphasis.
+Once approved, write the document to `./product/EXTERNAL-ROADMAP.md`. Tell the user the file path and offer a brief summary of the document's tone and emphasis.
 
 ---
 

@@ -32,7 +32,7 @@ The title must be:
 
 ### Requirements reference
 
-If a requirements GUID was provided (from a `requirements/` file), include it as the first line of the body:
+If a requirements GUID was provided (from a `product/` file), include it as the first line of the body:
 
 ```
 **Requirements:** `<guid>`

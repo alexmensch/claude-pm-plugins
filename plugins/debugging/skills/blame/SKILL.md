@@ -124,10 +124,10 @@ If the line is not present, the PR was not created with a requirements reference
 
 ### Step 6 — Find the requirements spec file
 
-Search `requirements/` for a Markdown file whose frontmatter contains the extracted GUID:
+Search `product/` for a Markdown file whose frontmatter contains the extracted GUID:
 
 ```bash
-grep -rl "<guid>" ./requirements/
+grep -rl "<guid>" ./product/
 ```
 
 Read the matching file. Extract:
@@ -153,7 +153,7 @@ For each unique commit, present the complete chain. Group by commit if multiple 
 | **Commit** | `abc1234` — _"Commit message"_ (Author Name, YYYY-MM-DD) |
 | **PR** | [#47 — PR title](link to PR) |
 | **Requirements** | `guid-value` |
-| **Spec file** | `requirements/feature-name.md` |
+| **Spec file** | `product/feature-name.md` |
 
 **Requirement(s):**
 
@@ -174,7 +174,7 @@ Show the complete sequence of commits that touched these lines, from most recent
 | **Commit** | `abc1234` — _"Commit message"_ (Author Name, YYYY-MM-DD) |
 | **PR** | [#47 — PR title](link to PR) |
 | **Requirements** | `guid-value` |
-| **Spec file** | `requirements/feature-name.md` |
+| **Spec file** | `product/feature-name.md` |
 
 **Requirement(s):**
 
