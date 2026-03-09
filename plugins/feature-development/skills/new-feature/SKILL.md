@@ -39,7 +39,7 @@ When implementing a new feature or new functionality in an existing codebase, yo
    3. Remove the worktree and its branch:
       ```bash
       git worktree remove <implementer_worktree_path> --force
-      git branch -d <implementer_worktree_branch>
+      git branch -D <implementer_worktree_branch>
       ```
    4. Verify the implementation files are present: run `git log --oneline -3` to confirm the merge commit is visible.
 
@@ -57,7 +57,7 @@ When implementing a new feature or new functionality in an existing codebase, yo
    3. Remove the worktree and its branch:
       ```bash
       git worktree remove <test_worktree_path> --force
-      git branch -d <test_worktree_branch>
+      git branch -D <test_worktree_branch>
       ```
    4. Verify the test files are present: run `git log --oneline -3` to confirm the merge commit is visible.
 
